@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatServer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="Сервер простого текстового чата" Height="389.252" Width="525">
+    <Grid Margin="15,0,0,0">
+
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="80,11,62,285">
+        <Run FontSize="16" Foreground="Black" FontWeight="Bold">Сервер простого текстового чата</Run>
+        </TextBlock>
+
+        <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" Margin="379,85,12,241" RenderTransformOrigin="0.464,0.105" />
+
+        <Button x:Name="StopButton" Content="Остановка сервера" IsDefault="True" Click="Stop_Button_Click" Margin="379,132,12,194" RenderTransformOrigin="0.464,0.105" />
+
+        <Button x:Name="ExitButton" Content="Выход" IsDefault="True" Click="Exit_Button_Click" Margin="379,214,12,112" RenderTransformOrigin="0.464,0.105" />
+
+        <ListBox Name="phonesList" Margin="0,43,140,56">
+            <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />
+        </ListBox>
+
+        <Button x:Name="CreateUserButton" Content="Новый пользователь" IsDefault="True" Click="Create_User_Button_Click" Margin="1,311,373,12" RenderTransformOrigin="0.464,0.105" />
+
+        <Button x:Name="ChangeUserButton" Content="Изменить пользователя" IsDefault="True" Click="Change_User_Button_Click" Margin="144,311,217,12" RenderTransformOrigin="0.464,0.105" />
+
+        <Button x:Name="DeleteUserButton" Content="Удалить пользователя" IsDefault="True" Click="Delete_User_Button_Click" Margin="299,311,69,12" RenderTransformOrigin="0.464,0.105" />
+
+
     </Grid>
 </Window>

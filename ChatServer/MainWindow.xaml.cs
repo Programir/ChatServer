@@ -24,5 +24,36 @@ namespace ChatServer
         {
             InitializeComponent();
         }
+
+        private void Create_User_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Change_User_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Delete_User_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Start_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Stop_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Exit_Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
