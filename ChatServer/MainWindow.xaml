@@ -28,6 +28,7 @@
 
         <Button x:Name="DeleteUserButton" Content="Удалить пользователя" Click="Delete_User_Button_Click" Margin="299,311,69,12" RenderTransformOrigin="0.464,0.105" />
 
+        <DatePicker />
 
     </Grid>
 </Window>

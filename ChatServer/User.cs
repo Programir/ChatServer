@@ -6,19 +6,24 @@ using System.Threading.Tasks;
 
 namespace ChatServer
 {
-    class User
+    public class User
     {
-        string UserName { get; set; }
-        string Password { get; set; }
-        DateTime DatOfBirth { get; set; }
-        string Email { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public DateTime DatOfBirth { get; set; }
+        public string Email { get; set; }
 
-        public User(string UserName, string Password, DateTime DatOfBirth, string Email)
-        {
-            this.UserName = UserName;
-            this.Password = Password;
-            this.DatOfBirth = DatOfBirth;
-            this.Email = Email;
-        }
+        //public User()
+        //{
+
+        //}
+
+        //public User(string UserName, string Password, DateTime DatOfBirth, string Email)
+        //{
+        //    this.UserName = UserName;
+        //    this.Password = Password;
+        //    this.DatOfBirth = DatOfBirth;
+        //    this.Email = Email;
+        //}
     }
 }

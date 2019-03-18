@@ -1,6 +1,8 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +22,7 @@ namespace ChatServer
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -27,7 +30,10 @@ namespace ChatServer
 
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            var newUser = new User()
+            {
+                UserName = "Денис"
+            };
         }
 
         private void Change_User_Button_Click(object sender, RoutedEventArgs e)
@@ -47,13 +53,54 @@ namespace ChatServer
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void Exit_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
+
+        void ReadUser()
+        {
+                using (var db = new LiteDatabase(@"data.db"))
+            {
+
+            }
+        }
+
+        void UpdateUser()
+        {
+            GoToChangeUserWindow();
+            using (var db = new LiteDatabase(@"data.db"))
+            {
+
+            }
+        }
+
+        void CreateUser()
+        {
+            GoToChangeUserWindow();
+            using (var db = new LiteDatabase(@"data.db"))
+            {
+
+            }
+        }
+
+        void DeleteUser()
+        {
+            using (var db = new LiteDatabase(@"data.db"))
+            {
+
+            }
+        }
+
+        private void GoToChangeUserWindow()
+        {
+            ChangeUserWindow changeUserWindow = new ChangeUserWindow();
+            changeUserWindow.Show();
+        }
+
 
     }
 }
