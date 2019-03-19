@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections;
 
 namespace ChatServer
 {
@@ -28,11 +29,14 @@ namespace ChatServer
             InitializeComponent();
         }
 
+        ListBox UserList = (ListBox) ReadUsers();
+        
+
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
-            var newUser = new User()
+            User newUser = new User()
             {
-                UserName = "Денис"
+                //UserName;
             };
         }
 
@@ -61,11 +65,11 @@ namespace ChatServer
             this.Close();
         }
 
-        void ReadUser()
+        public static IEnumerable<User> ReadUsers()
         {
-                using (var db = new LiteDatabase(@"data.db"))
+            using (var db = new LiteDatabase(@"data.db"))
             {
-
+                return db.GetCollection<User>().FindAll();
             }
         }
 

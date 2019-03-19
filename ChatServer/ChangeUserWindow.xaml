@@ -7,9 +7,29 @@
         mc:Ignorable="d"
         Title="ChangeUserWindow" Height="300" Width="300">
     <Grid>
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="auto,auto,auto,auto" Grid.Column="3">
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="-19,-13,-8,2">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Добавление/изменение пользователя</Run>
         </TextBlock>
-        
+
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="19,55,215,200"><Run Foreground="Black" FontWeight="Bold" FontSize="10" Text="Логин:"/></TextBlock>
+
+        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="Input_TextBox_Login" Margin="13,75,129,175" RenderTransformOrigin="0.403,0.383"/>
+
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="22,98,212,157"><Run Foreground="Black" FontWeight="Bold" FontSize="10" Text="Пароль:"/></TextBlock>
+
+        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="Input_TextBox_Login" Margin="13,116,129,134" RenderTransformOrigin="0.403,0.383"/>
+
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="24,139,210,116"><Run Foreground="Black" FontWeight="Bold" FontSize="10" Text="Эл. почта:"/></TextBlock>
+
+        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="Input_TextBox_Login" Margin="13,156,129,94" RenderTransformOrigin="0.403,0.383"/>
+
+        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="22,179,180,76"><Run Foreground="Black" FontWeight="Bold" FontSize="10" Text="Дата рождения:"/></TextBlock>
+
+        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="Input_TextBox_Login" Margin="13,198,129,52" RenderTransformOrigin="0.403,0.383"/>
+
+        <Button x:Name="OKButton" Content="OK" IsDefault="True" Click="OK_Button_Click" Margin="50,236,161,8" RenderTransformOrigin="0.464,0.105" />
+
+        <Button x:Name="CancelButton" Content="Отмена" IsCancel="True" Click="Cancel_Button_Click" Margin="167,236,44,7" RenderTransformOrigin="0.464,0.105" />
+
     </Grid>
 </Window>

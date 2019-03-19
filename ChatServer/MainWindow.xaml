@@ -18,7 +18,7 @@
 
         <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" Margin="379,214,12,112" RenderTransformOrigin="0.464,0.105" />
 
-        <ListBox Name="phonesList" Margin="0,43,140,56">
+        <ListBox Name="UserList" Margin="0,43,140,56">
             <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />
         </ListBox>
 

@@ -13,17 +13,6 @@ namespace ChatServer
         public DateTime DatOfBirth { get; set; }
         public string Email { get; set; }
 
-        //public User()
-        //{
-
-        //}
-
-        //public User(string UserName, string Password, DateTime DatOfBirth, string Email)
-        //{
-        //    this.UserName = UserName;
-        //    this.Password = Password;
-        //    this.DatOfBirth = DatOfBirth;
-        //    this.Email = Email;
-        //}
+        
     }
 }
