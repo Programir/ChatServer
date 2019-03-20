@@ -29,9 +29,8 @@ namespace ChatServer
             InitializeComponent();
         }
 
-        ListBox UserList = (ListBox) ReadUsers();
-        
-
+        public List<User> UsersList { get; set; }
+       
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
             User newUser = new User()
