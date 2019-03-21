@@ -74,7 +74,7 @@ namespace ChatServer
 
         void UpdateUser()
         {
-            GoToChangeUserWindow();
+           
             using (var db = new LiteDatabase(@"data.db"))
             {
 
@@ -83,7 +83,7 @@ namespace ChatServer
 
         void CreateUser()
         {
-            GoToChangeUserWindow();
+            
             using (var db = new LiteDatabase(@"data.db"))
             {
 
@@ -98,11 +98,7 @@ namespace ChatServer
             }
         }
 
-        private void GoToChangeUserWindow()
-        {
-            ChangeUserWindow changeUserWindow = new ChangeUserWindow();
-            changeUserWindow.Show();
-        }
+        
 
 
     }
