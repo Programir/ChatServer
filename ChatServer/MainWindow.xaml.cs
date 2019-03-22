@@ -29,14 +29,12 @@ namespace ChatServer
             InitializeComponent();
         }
 
-        public List<User> UsersList { get; set; }
+        public List<User> UsersList = ReadUsers();
+        
        
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
-            User newUser = new User()
-            {
-                //UserName;
-            };
+                        
         }
 
         private void Change_User_Button_Click(object sender, RoutedEventArgs e)
@@ -64,11 +62,11 @@ namespace ChatServer
             this.Close();
         }
 
-        public static IEnumerable<User> ReadUsers()
+        public static List<User> ReadUsers()
         {
             using (var db = new LiteDatabase(@"data.db"))
             {
-                return db.GetCollection<User>().FindAll();
+                return (List<User>)db.GetCollection<User>().FindAll();
             }
         }
 
