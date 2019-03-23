@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
+using System.Collections.ObjectModel;
 
 namespace ChatServer
 {
@@ -29,9 +30,13 @@ namespace ChatServer
             InitializeComponent();
         }
 
+        //public List<User> UsersList = ReadUsers();
         public List<User> UsersList = ReadUsers();
-        
-       
+
+
+
+
+
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
                         

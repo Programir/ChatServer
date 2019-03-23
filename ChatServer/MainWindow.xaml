@@ -33,7 +33,7 @@
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Логин:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="Input_TextBox_Login" Margin="131,338,162,194" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="User.Login" Margin="131,338,162,194" RenderTransformOrigin="0.403,0.383"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="5,374,384,161">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Пароль:</Run>
