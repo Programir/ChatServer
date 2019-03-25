@@ -16,30 +16,35 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ChatServer
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         
         public MainWindow()
         {
+            var users = ReadUsers();
+            UsersList = users != null
+                ? new ObservableCollection<User>(users)
+                : new ObservableCollection<User>();
+
             InitializeComponent();
         }
 
         //public List<User> UsersList = ReadUsers();
-        public List<User> UsersList = ReadUsers();
+        public ObservableCollection<User> UsersList { get; set; }
 
-
-
-
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
-                        
+            CreateUser();
         }
 
         private void Change_User_Button_Click(object sender, RoutedEventArgs e)
@@ -69,10 +74,23 @@ namespace ChatServer
 
         public static List<User> ReadUsers()
         {
-            using (var db = new LiteDatabase(@"data.db"))
+            var result = new List<User>();
+
+            for (int i = 0; i < 100; i++)
             {
-                return (List<User>)db.GetCollection<User>().FindAll();
+                result.Add(new User()
+                {
+                    UserName = $"UserName{i.ToString()}",
+                    Email = $"user.name.{i.ToString()}@test.com"
+                });
             }
+
+            return result;
+
+            //using (var db = new LiteDatabase(@"data.db"))
+            //{
+            //    return (List<User>)db.GetCollection<User>().FindAll();
+            //}
         }
 
         void UpdateUser()
@@ -86,11 +104,13 @@ namespace ChatServer
 
         void CreateUser()
         {
-            
-            using (var db = new LiteDatabase(@"data.db"))
-            {
+            UsersList.Add(new User() { UserName = "NewUser" });
+            OnPropertyChanged(nameof(UsersList));
 
-            }
+            //using (var db = new LiteDatabase(@"data.db"))
+            //{
+
+            //}
         }
 
         void DeleteUser()
@@ -101,8 +121,16 @@ namespace ChatServer
             }
         }
 
-        
+        private void Input_TextBox_Email(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
 
     }
 }

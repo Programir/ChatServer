@@ -12,13 +12,14 @@ namespace ChatServer
 
         private void Input_TextBox_Login(object sender, RoutedEventArgs e)
         {
-            Password = passwordBox.Password;
+            //Password = passwordBox.Password;
         }
 
         private void OK_Button_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
+
 
         private void Cancel_Button_Click(object sender, RoutedEventArgs e)
         {

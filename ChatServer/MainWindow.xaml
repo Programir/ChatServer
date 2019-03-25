@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatServer"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Сервер простого текстового чата" Height="500" Width="525">
     <Grid Margin="2,6,27,-95">
 
@@ -19,8 +20,17 @@
 
         <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" Margin="394,227,-16,300" RenderTransformOrigin="0.464,0.105" />
 
-        <ListBox Name="UserList" Margin="2,54,111,273">
-            <TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />
+        <ListBox Name="UserList" ItemsSource="{Binding UsersList}" Margin="2,54,111,273">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="{Binding UserName}" Margin="0,0,45,0" />
+                        <Label Content="{Binding Email}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <!--<TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />-->
         </ListBox>
 
         <Button x:Name="CreateUserButton" Content="Новый пользователь" Click="Create_User_Button_Click" Margin="10,297,352,230" RenderTransformOrigin="0.464,0.105" />
@@ -33,13 +43,13 @@
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Логин:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="User.Login" Margin="131,338,162,194" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" RenderTransformOrigin="0.403,0.383"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="5,374,384,161">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Пароль:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="User.Password" Margin="131,373,162,159" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap"  Margin="131,373,162,159" RenderTransformOrigin="0.403,0.383"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="12,410,377,125">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Эл. почта:</Run>
