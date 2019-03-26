@@ -20,7 +20,8 @@
 
         <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" Margin="394,227,-16,300" RenderTransformOrigin="0.464,0.105" />
 
-        <ListBox Name="UserList" ItemsSource="{Binding UsersList}" Margin="2,54,111,273">
+        <ListBox Name="UserList" ItemsSource="{Binding UsersList}" Margin="2,54,111,273"
+            SelectedItem="{Binding Path=SelectedUser, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -43,7 +44,7 @@
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Логин:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" Text="{Binding ElementName=login, Path=Text}" RenderTransformOrigin="0.403,0.383" TextChanged="TextBox_TextChanged"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="5,374,384,161">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Пароль:</Run>

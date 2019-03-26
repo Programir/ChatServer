@@ -37,8 +37,22 @@ namespace ChatServer
             InitializeComponent();
         }
 
-        //public List<User> UsersList = ReadUsers();
         public ObservableCollection<User> UsersList { get; set; }
+
+        public string login { get; set; }
+
+        private User selectedUser;
+
+        public User SelectedUser
+        {
+            get { return selectedUser; }
+            
+            set {
+                login = selectedUser.UserName;
+                OnPropertyChanged(nameof(login));
+                //OnPropertyChanged(nameof(email));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -95,11 +109,7 @@ namespace ChatServer
 
         void UpdateUser()
         {
-           
-            using (var db = new LiteDatabase(@"data.db"))
-            {
-
-            }
+            //UsersList.Sel
         }
 
         void CreateUser()
@@ -132,5 +142,9 @@ namespace ChatServer
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
