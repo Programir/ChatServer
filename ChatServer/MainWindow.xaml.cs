@@ -39,18 +39,22 @@ namespace ChatServer
 
         public ObservableCollection<User> UsersList { get; set; }
 
-        public string login { get; set; }
+        public string userName { get { return SelectedUser.UserName; } set { SelectedUser.UserName = value; } }
+        public string password { get { return SelectedUser.Password; } set { SelectedUser.Password = value; } }
+        public string email { get { return SelectedUser.Email; } set { SelectedUser.Email = value; } }
+        
 
         private User selectedUser;
 
-        public User SelectedUser
+         public User SelectedUser
         {
             get { return selectedUser; }
-            
             set {
-                login = selectedUser.UserName;
-                OnPropertyChanged(nameof(login));
-                //OnPropertyChanged(nameof(email));
+                selectedUser = value;
+                OnPropertyChanged(nameof(userName));
+                OnPropertyChanged(nameof(password));
+                OnPropertyChanged(nameof(email));
+                
             }
         }
 
@@ -95,6 +99,7 @@ namespace ChatServer
                 result.Add(new User()
                 {
                     UserName = $"UserName{i.ToString()}",
+                    Password = $"P@ssword{i.ToString()}",
                     Email = $"user.name.{i.ToString()}@test.com"
                 });
             }
@@ -143,6 +148,11 @@ namespace ChatServer
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Input_TextBox_Email(object sender, TextChangedEventArgs e)
         {
 
         }

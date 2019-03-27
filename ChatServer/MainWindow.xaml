@@ -44,19 +44,19 @@
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Логин:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" Text="{Binding ElementName=login, Path=Text}" RenderTransformOrigin="0.403,0.383" TextChanged="TextBox_TextChanged"/>
-
+        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" Text="{Binding userName}" RenderTransformOrigin="0.403,0.383"/>
+        
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="5,374,384,161">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Пароль:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap"  Margin="131,373,162,159" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,373,162,159" Text="{Binding password}" RenderTransformOrigin="0.403,0.383"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="12,410,377,125">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Эл. почта:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" TextChanged="Input_TextBox_Email" Margin="132,408,161,124" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="132,408,161,124" Text="{Binding email}" RenderTransformOrigin="0.403,0.383"/>
 
 
     </Grid>
