@@ -58,6 +58,19 @@ namespace ChatServer
             }
         }
 
+       
+        /*public void PasswordBoxLoaded(RoutedEventArgs e)
+        {   // Получаем ссылку на PasswordBox, т.к. привязаться напрямую к свойству Password нельзя
+            if (e == null || e.OriginalSource == null)
+                return;
+
+            var passwordBox = e.OriginalSource as PasswordBox;
+            if (passwordBox == null)
+                return;
+
+            _passwordBox = passwordBox;
+        }*/
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
@@ -65,11 +78,16 @@ namespace ChatServer
             CreateUser();
         }
 
-        private void Change_User_Button_Click(object sender, RoutedEventArgs e)
+        private void Apply_Changes_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            using (var db = new LiteDatabase(@"data.db"))
+            {
+                var LiteDBUsers = db.GetCollection<User>();
+                LiteDBUsers.Delete(x => x.UserName.StartsWith("User"));
+                LiteDBUsers.Insert(UsersList);
+            }
         }
-
+        
         private void Delete_User_Button_Click(object sender, RoutedEventArgs e)
         {
 
@@ -153,6 +171,11 @@ namespace ChatServer
         }
 
         private void Input_TextBox_Email(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
 
         }

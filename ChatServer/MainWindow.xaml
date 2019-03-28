@@ -36,21 +36,22 @@
 
         <Button x:Name="CreateUserButton" Content="Новый пользователь" Click="Create_User_Button_Click" Margin="10,297,352,230" RenderTransformOrigin="0.464,0.105" />
 
-        <Button x:Name="ChangeUserButton" Content="Изменить пользователя" Click="Change_User_Button_Click" Margin="168,297,180,230" RenderTransformOrigin="0.464,0.105" />
+        <Button x:Name="ChangeUserButton" Content="Сохранить изменения" Click="Apply_Changes_Button_Click" Margin="168,297,180,230" RenderTransformOrigin="0.464,0.105" />
 
-        <Button x:Name="DeleteUserButton" Content="Удалить пользователя" Click="Delete_User_Button_Click" Margin="334,297,22,230" RenderTransformOrigin="0.464,0.105" />
+        <Button x:Name="DeleteUserButton" Content="Удалить пользователя" Click="Delete_User_Button_Click" Margin="334,297,22,230" RenderTransformOrigin="0.464,0.105"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="3,337,386,198">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Логин:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" Text="{Binding userName}" RenderTransformOrigin="0.403,0.383"/>
+        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" Text="{Binding userName}" RenderTransformOrigin="0.403,0.383" TextChanged="TextBox_TextChanged_1"/>
         
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="5,374,384,161">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Пароль:</Run>
         </TextBlock>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,373,162,159" Text="{Binding password}" RenderTransformOrigin="0.403,0.383"/>
+
+        <TextBox Name="textPasswordBox" MaxLength="20" TextWrapping="Wrap" Margin="131,373,162,159" Text="{Binding password}"  RenderTransformOrigin="0.403,0.383"/>
 
         <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="12,410,377,125">
         <Run FontSize="16" Foreground="Black" FontWeight="Bold">Эл. почта:</Run>
