@@ -33,7 +33,7 @@ namespace ChatServer
             UsersList = users != null
                 ? new ObservableCollection<User>(users)
                 : new ObservableCollection<User>();
-
+                
             InitializeComponent();
         }
 
@@ -82,9 +82,12 @@ namespace ChatServer
         {
             using (var db = new LiteDatabase(@"data.db"))
             {
-                var LiteDBUsers = db.GetCollection<User>();
-                LiteDBUsers.Delete(x => x.UserName.StartsWith("User"));
-                LiteDBUsers.Insert(UsersList);
+                var LiteDBUsers = db.GetCollection<User>(); 
+                //LiteDBUsers.Delete(x => x.UserName.StartsWith("User"));
+                if (LiteDBUsers == null)
+                    LiteDBUsers.Insert(UsersList);
+                else
+                    LiteDBUsers.Update(UsersList);
             }
         }
         
@@ -108,11 +111,17 @@ namespace ChatServer
             this.Close();
         }
 
-        public static List<User> ReadUsers()
+        public List<User> ReadUsers()
         {
-            var result = new List<User>();
-
-            for (int i = 0; i < 100; i++)
+            using (var db = new LiteDatabase(@"data.db"))
+            {
+                var collection = db.GetCollection<User>().FindAll();
+                if (collection == null)
+                    return null;
+                return collection.ToList();
+            }
+            
+      /*    for (int i = 0; i < 100; i++)
             {
                 result.Add(new User()
                 {
@@ -120,19 +129,13 @@ namespace ChatServer
                     Password = $"P@ssword{i.ToString()}",
                     Email = $"user.name.{i.ToString()}@test.com"
                 });
-            }
-
-            return result;
-
-            //using (var db = new LiteDatabase(@"data.db"))
-            //{
-            //    return (List<User>)db.GetCollection<User>().FindAll();
-            //}
+            }*/
+            //return result;
         }
 
         void UpdateUser()
         {
-            //UsersList.Sel
+            
         }
 
         void CreateUser()
