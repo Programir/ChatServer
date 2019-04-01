@@ -8,6 +8,7 @@ namespace ChatServer
 {
     public class User
     {
+        public int _id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
 //        public DateTime DatOfBirth { get; set; }

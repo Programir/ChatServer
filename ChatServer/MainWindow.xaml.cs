@@ -82,12 +82,15 @@ namespace ChatServer
         {
             using (var db = new LiteDatabase(@"data.db"))
             {
-                var LiteDBUsers = db.GetCollection<User>(); 
-                //LiteDBUsers.Delete(x => x.UserName.StartsWith("User"));
+                var LiteDBUsers = db.GetCollection<User>();
                 if (LiteDBUsers == null)
-                    LiteDBUsers.Insert(UsersList);
+                { LiteDBUsers.Insert(UsersList); MessageBox.Show("Сохранено"); }
                 else
+                {
                     LiteDBUsers.Update(UsersList);
+                    //int length = LiteDBUsers.LongCount;
+                    MessageBox.Show("Обновлено");
+                }
             }
         }
         
