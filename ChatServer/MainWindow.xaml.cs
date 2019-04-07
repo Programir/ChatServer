@@ -26,6 +26,7 @@ namespace ChatServer
         }
 
         public ObservableCollection<User> UsersList { get; set; }
+        List<User> RemovedUsers = new List<User>();
         public string UserName
         {
             get { return SelectedUser?.UserName; }
@@ -85,14 +86,34 @@ namespace ChatServer
             using (var db = new LiteDatabase(@"data.db"))
             {
                 var liteDBUsers = db.GetCollection<User>();
+                if (RemovedUsers.Count>0)
+                
+                    foreach(var user in RemovedUsers)
+                    {
+                        liteDBUsers.Delete(user.UserId);
+                    }
+                
                 liteDBUsers.Upsert(UsersList);
                 MessageBox.Show("Обновлено");
+                //Дальше идет тестовый код
+                /*
+                if (liteDBUsers.Equals(UserList))
+                {
+                    MessageBox.Show("Совпадает");
+                }
+                else
+                {
+                    MessageBox.Show("Не совпадает");
+                } */
             }
         }
         
         private void Delete_User_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            User user = SelectedUser;
+            UsersList.Remove(user);
+            OnPropertyChanged(nameof(UsersList));
+            RemovedUsers.Add(user);
         }
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
@@ -143,10 +164,6 @@ namespace ChatServer
             UsersList.Add(new User() { UserName = "NewUser" });
             OnPropertyChanged(nameof(UsersList));
 
-            //using (var db = new LiteDatabase(@"data.db"))
-            //{
-
-            //}
         }
 
         private void UpdateList()
