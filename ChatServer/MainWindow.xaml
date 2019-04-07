@@ -7,58 +7,83 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Сервер простого текстового чата" Height="500" Width="525">
-    <Grid Margin="2,6,27,-95">
+    <Grid>
 
-
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="80,11,62,252.18">
-        <Run FontSize="16" Foreground="Black" FontWeight="Bold">Сервер простого текстового чата</Run>
-        </TextBlock>
-
-        <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" Height="30" Margin="393,77,-17,452" />
-
-        <Button x:Name="StopButton" Content="Остановка сервера" Click="Stop_Button_Click" Margin="393,123,-17,404" RenderTransformOrigin="0.464,0.105" />
-
-        <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" Margin="394,227,-16,300" RenderTransformOrigin="0.464,0.105" />
-
-        <ListBox Name="UserList" ItemsSource="{Binding UsersList}" Margin="2,54,111,273"
-            SelectedItem="{Binding Path=SelectedUser, Mode=TwoWay}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding UserName}" Margin="0,0,45,0" />
-                        <Label Content="{Binding Email}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
-            <!--<TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />-->
-        </ListBox>
-
-        <Button x:Name="CreateUserButton" Content="Новый пользователь" Click="Create_User_Button_Click" Margin="10,297,352,230" RenderTransformOrigin="0.464,0.105" />
-
-        <Button x:Name="ChangeUserButton" Content="Сохранить изменения" Click="Apply_Changes_Button_Click" Margin="168,297,180,230" RenderTransformOrigin="0.464,0.105" />
-
-        <Button x:Name="DeleteUserButton" Content="Удалить пользователя" Click="Delete_User_Button_Click" Margin="334,297,22,230" RenderTransformOrigin="0.464,0.105"/>
-
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="3,337,386,198">
-        <Run FontSize="16" Foreground="Black" FontWeight="Bold">Логин:</Run>
-        </TextBlock>
-
-        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="131,338,162,194" Text="{Binding userName}" RenderTransformOrigin="0.403,0.383" TextChanged="TextBox_TextChanged_1"/>
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="5" />
+            </Style>
+        </Grid.Resources>
         
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="5,374,384,161">
-        <Run FontSize="16" Foreground="Black" FontWeight="Bold">Пароль:</Run>
-        </TextBlock>
+        <Grid.RowDefinitions>
+            <!--Заголовок-->
+            <RowDefinition Height="auto" />
+            <!--Список пользователей-->
+            <RowDefinition Height="*" />
+            <!--Кнопки-->
+            <RowDefinition Height="auto" />
+            <!--Поля ввода-->
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
 
+        <Label Content="Сервер простого текстового чата" Grid.Row="0" HorizontalAlignment="Center" FontSize="16" FontWeight="Bold" />
 
-        <TextBox Name="textPasswordBox" MaxLength="20" TextWrapping="Wrap" Margin="131,373,162,159" Text="{Binding password}"  RenderTransformOrigin="0.403,0.383"/>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <!--Список пользователей-->
+                <ColumnDefinition Width="*" />
+                <!--Кнопки-->
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
 
-        <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Margin="12,410,377,125">
-        <Run FontSize="16" Foreground="Black" FontWeight="Bold">Эл. почта:</Run>
-        </TextBlock>
+            <ListBox Name="UserList" ItemsSource="{Binding UsersList}" Grid.Column="0" SelectedItem="{Binding Path=SelectedUser, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="{Binding UserName}" Margin="0,0,45,0" />
+                            <Label Content="{Binding Email}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
 
-        <TextBox MaxLength="20" TextWrapping="Wrap" Margin="132,408,161,124" Text="{Binding email}" RenderTransformOrigin="0.403,0.383"/>
+                <!--<TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />-->
+            </ListBox>
 
+            <StackPanel Grid.Column="1">
+                <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" Grid.Row="0" />
+                <Button x:Name="StopButton" Content="Остановка сервера" Click="Stop_Button_Click" Grid.Row="1" />
+                <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" Grid.Row="2" />
+            </StackPanel>
 
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="CreateUserButton" Content="Новый пользователь" Click="Create_User_Button_Click" Grid.Column="0" />
+            <Button x:Name="ChangeUserButton" Content="Сохранить изменения" Click="Apply_Changes_Button_Click" Grid.Column="1" />
+            <Button x:Name="DeleteUserButton" Content="Удалить пользователя" Click="Delete_User_Button_Click" Grid.Column="2" />
+
+        </Grid>
+
+        <StackPanel Grid.Row="3" Margin="5">
+
+            <Label Content="Логин:" FontSize="16" FontWeight="Bold" />
+            <TextBox MaxLength="20" Text="{Binding UserName}" />
+
+            <Label Content="Пароль:" FontSize="16" FontWeight="Bold" />
+            <TextBox Name="textPasswordBox" MaxLength="20" Text="{Binding Password}" />
+
+            <Label Content="Эл. почта:" FontSize="16" FontWeight="Bold" />
+            <TextBox MaxLength="20" Text="{Binding Email}" />
+
+        </StackPanel>
+        
     </Grid>
 </Window>

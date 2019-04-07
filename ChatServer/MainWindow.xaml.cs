@@ -1,23 +1,12 @@
 ﻿using LiteDB;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace ChatServer
 {
@@ -26,7 +15,6 @@ namespace ChatServer
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        
         public MainWindow()
         {
             var users = ReadUsers();
@@ -38,23 +26,37 @@ namespace ChatServer
         }
 
         public ObservableCollection<User> UsersList { get; set; }
-
-        public string userName { get { return SelectedUser.UserName; } set { SelectedUser.UserName = value; } }
-        public string password { get { return SelectedUser.Password; } set { SelectedUser.Password = value; } }
-        public string email { get { return SelectedUser.Email; } set { SelectedUser.Email = value; } }
+        public string UserName
+        {
+            get { return SelectedUser?.UserName; }
+            set
+            {
+                SelectedUser.UserName = value;
+                UpdateList();   // Обновляем список, чтобы изменилось имя пользователя
+            }
+        }
+        public string Password
+        {
+            get { return SelectedUser?.Password; }
+            set { SelectedUser.Password = value; }
+        }
+        public string Email
+        {
+            get { return SelectedUser?.Email; }
+            set { SelectedUser.Email = value; }
+        }
         
-
         private User selectedUser;
 
-         public User SelectedUser
+        public User SelectedUser
         {
             get { return selectedUser; }
-            set {
+            set
+            {
                 selectedUser = value;
-                OnPropertyChanged(nameof(userName));
-                OnPropertyChanged(nameof(password));
-                OnPropertyChanged(nameof(email));
-                
+                OnPropertyChanged(nameof(UserName));
+                OnPropertyChanged(nameof(Password));
+                OnPropertyChanged(nameof(Email));
             }
         }
 
@@ -82,15 +84,9 @@ namespace ChatServer
         {
             using (var db = new LiteDatabase(@"data.db"))
             {
-                var LiteDBUsers = db.GetCollection<User>();
-                if (LiteDBUsers == null)
-                { LiteDBUsers.Insert(UsersList); MessageBox.Show("Сохранено"); }
-                else
-                {
-                    LiteDBUsers.Update(UsersList);
-                    //int length = LiteDBUsers.LongCount;
-                    MessageBox.Show("Обновлено");
-                }
+                var liteDBUsers = db.GetCollection<User>();
+                liteDBUsers.Upsert(UsersList);
+                MessageBox.Show("Обновлено");
             }
         }
         
@@ -121,6 +117,7 @@ namespace ChatServer
                 var collection = db.GetCollection<User>().FindAll();
                 if (collection == null)
                     return null;
+
                 return collection.ToList();
             }
             
@@ -152,6 +149,12 @@ namespace ChatServer
             //}
         }
 
+        private void UpdateList()
+        {
+            OnPropertyChanged(nameof(UsersList));
+            CollectionViewSource.GetDefaultView(UsersList).Refresh();
+        }
+
         void DeleteUser()
         {
             using (var db = new LiteDatabase(@"data.db"))
@@ -177,11 +180,6 @@ namespace ChatServer
         }
 
         private void Input_TextBox_Email(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
 
         }
