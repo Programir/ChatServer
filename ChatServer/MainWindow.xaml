@@ -47,13 +47,12 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
 
-                <!--<TextBlock FontWeight="Bold" TextDecorations="Underline" Text="Список пользователей чата:" />-->
             </ListBox>
 
             <StackPanel Grid.Column="1">
-                <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" Grid.Row="0" />
-                <Button x:Name="StopButton" Content="Остановка сервера" Click="Stop_Button_Click" Grid.Row="1" />
-                <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" Grid.Row="2" />
+                <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" />
+                <Button x:Name="StopButton" Content="Остановка сервера" Click="Stop_Button_Click" />
+                <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" />
             </StackPanel>
 
         </Grid>

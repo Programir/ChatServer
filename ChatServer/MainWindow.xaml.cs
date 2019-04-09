@@ -1,9 +1,11 @@
 ﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.ServiceModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +17,8 @@ namespace ChatServer
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private ServiceHost _chatServer;
+
         public MainWindow()
         {
             var users = ReadUsers();
@@ -83,28 +87,25 @@ namespace ChatServer
 
         private void Apply_Changes_Button_Click(object sender, RoutedEventArgs e)
         {
+            var hasDuplicates = ControlDuplicates();
+            if (hasDuplicates)
+            {
+                MessageBox.Show("В списке пользователей обнаружены повторяющиеся имена");
+                return;
+            }
+
             using (var db = new LiteDatabase(@"data.db"))
             {
                 var liteDBUsers = db.GetCollection<User>();
-                if (RemovedUsers.Count>0)
-                
-                    foreach(var user in RemovedUsers)
+                if (RemovedUsers.Count > 0)
+                {
+                    foreach (var user in RemovedUsers)
                     {
                         liteDBUsers.Delete(user.UserId);
                     }
-                
-                liteDBUsers.Upsert(UsersList);
-                MessageBox.Show("Обновлено");
-                //Дальше идет тестовый код
-                /*
-                if (liteDBUsers.Equals(UserList))
-                {
-                    MessageBox.Show("Совпадает");
                 }
-                else
-                {
-                    MessageBox.Show("Не совпадает");
-                } */
+
+               liteDBUsers.Upsert(UsersList);
             }
         }
         
@@ -116,9 +117,24 @@ namespace ChatServer
             RemovedUsers.Add(user);
         }
 
+        private bool ControlDuplicates()
+        {
+            var hasDuplicates = UsersList
+                .GroupBy(u => u.UserName)
+                .Any(g => g.Count() > 1);
+
+            return hasDuplicates;
+        }
+
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
+            _chatServer = new ServiceHost(typeof(Server));
+            var instanceProvider = new InstanceProviderBehavior<Server>(() => new Server(UsersList));
+            instanceProvider.AddToAllContracts(_chatServer);
 
+            _chatServer.ManualFlowControlLimit = Int32.MaxValue;
+            _chatServer.Open();
+            
         }
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
