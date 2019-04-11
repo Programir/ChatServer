@@ -1,4 +1,5 @@
-﻿using LiteDB;
+﻿using ChatServer;
+using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +18,7 @@ namespace ChatServer
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        private bool _secondRun;
         private ServiceHost _chatServer;
 
         public MainWindow()
@@ -37,7 +39,7 @@ namespace ChatServer
             set
             {
                 SelectedUser.UserName = value;
-                UpdateList();   // Обновляем список, чтобы изменилось имя пользователя
+                UpdateList();
             }
         }
         public string Password
@@ -128,18 +130,17 @@ namespace ChatServer
 
         private void Start_Button_Click(object sender, RoutedEventArgs e)
         {
-            _chatServer = new ServiceHost(typeof(Server));
-            var instanceProvider = new InstanceProviderBehavior<Server>(() => new Server(UsersList));
-            instanceProvider.AddToAllContracts(_chatServer);
+            var server = new Server(UsersList);
+            _chatServer = new ServiceHost(server);
 
             _chatServer.ManualFlowControlLimit = Int32.MaxValue;
             _chatServer.Open();
-            
         }
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
-
+            if(_chatServer != null)
+                _chatServer.Close();
         }
 
         private void Exit_Button_Click(object sender, RoutedEventArgs e)

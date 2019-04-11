@@ -64,7 +64,6 @@
     <Compile Include="ChangeUserWindow.xaml.cs">
       <DependentUpon>ChangeUserWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InstanceProviderBehavior.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="User.cs" />
