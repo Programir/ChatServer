@@ -1,9 +1,9 @@
-﻿using ChatServer;
-using LiteDB;
+﻿using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
@@ -18,7 +18,6 @@ namespace ChatServer
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        private bool _secondRun;
         private ServiceHost _chatServer;
 
         public MainWindow()
@@ -84,33 +83,77 @@ namespace ChatServer
 
         private void Create_User_Button_Click(object sender, RoutedEventArgs e)
         {
-            CreateUser();
+            try
+            {
+                CreateUser();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
         }
 
-        private void Apply_Changes_Button_Click(object sender, RoutedEventArgs e)
+        private void Apply_Changes_Button_Click(object sender, RoutedEventArgs e) 
+        {
+            try
+            {
+                ApplyUsers();
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex);
+            }
+        }
+
+        private void HandleException(Exception ex)
+        {
+            string message = ex.Message;
+            string caption = "Ошибка";
+            var image = MessageBoxImage.Error;
+            if (ex is WarningException)
+            {
+                caption = "Внимание";
+                image = MessageBoxImage.Warning;
+            }
+            else
+            {
+                message = $"{message}\nStackTrace:\n{ex.StackTrace}";
+            }
+
+            MessageBox.Show(message, caption, MessageBoxButton.OK, image);
+            //Debug.WriteLine($"{DateTime.Now} | {ex.Message}");
+        }
+
+        private void ApplyUsers()
         {
             var hasDuplicates = ControlDuplicates();
             if (hasDuplicates)
             {
-                MessageBox.Show("В списке пользователей обнаружены повторяющиеся имена");
-                return;
+                throw new WarningException("В списке пользователей обнаружены повторяющиеся имена");
             }
 
-            using (var db = new LiteDatabase(@"data.db"))
+            try
             {
-                var liteDBUsers = db.GetCollection<User>();
-                if (RemovedUsers.Count > 0)
+                using (var db = new LiteDatabase(@"data.db"))
                 {
-                    foreach (var user in RemovedUsers)
+                    var liteDBUsers = db.GetCollection<User>();
+                    if (RemovedUsers.Count > 0)
                     {
-                        liteDBUsers.Delete(user.UserId);
+                        foreach (var user in RemovedUsers)
+                        {
+                            liteDBUsers.Delete(user.UserId);
+                        }
                     }
-                }
 
-               liteDBUsers.Upsert(UsersList);
+                    liteDBUsers.Upsert(UsersList);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Не удается записать изменения в базу данных. Проверьте права доступа на файл data.db, атрибут \"Только чтение\".", ex);
             }
         }
-        
+
         private void Delete_User_Button_Click(object sender, RoutedEventArgs e)
         {
             User user = SelectedUser;
