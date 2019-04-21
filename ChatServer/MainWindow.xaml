@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="Сервер простого текстового чата" Height="500" Width="525">
+    
     <Grid>
 
         <Grid.Resources>
@@ -50,8 +51,8 @@
             </ListBox>
 
             <StackPanel Grid.Column="1">
-                <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" />
-                <Button x:Name="StopButton" Content="Остановка сервера" Click="Stop_Button_Click" />
+                <Button x:Name="StartButton" Content="Запуск сервера" IsDefault="True" Click="Start_Button_Click" IsEnabled="{Binding StartButtonEnabled}" />
+                <Button x:Name="StopButton" Content="Остановка сервера" Click="Stop_Button_Click" IsEnabled="{Binding StopButtonEnabled}" />
                 <Button x:Name="ExitButton" Content="Выход" IsCancel="True" Click="Exit_Button_Click" />
             </StackPanel>
 

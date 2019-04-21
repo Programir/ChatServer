@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel;
@@ -16,9 +15,20 @@ namespace ChatServer
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window, INotifyPropertyChanged, IChatServer
     {
         private ServiceHost _chatServer;
+        
+        private static List<Message> messages = new List<Message>(1000);
+
+        public bool StartButtonEnabled
+        {
+            get { return _chatServer == null || _chatServer.State == CommunicationState.Closed; }
+        }
+        public bool StopButtonEnabled
+        {
+            get { return _chatServer != null && _chatServer.State == CommunicationState.Opened; }
+        }
 
         public MainWindow()
         {
@@ -65,19 +75,6 @@ namespace ChatServer
                 OnPropertyChanged(nameof(Email));
             }
         }
-
-       
-        /*public void PasswordBoxLoaded(RoutedEventArgs e)
-        {   // Получаем ссылку на PasswordBox, т.к. привязаться напрямую к свойству Password нельзя
-            if (e == null || e.OriginalSource == null)
-                return;
-
-            var passwordBox = e.OriginalSource as PasswordBox;
-            if (passwordBox == null)
-                return;
-
-            _passwordBox = passwordBox;
-        }*/
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -178,12 +175,19 @@ namespace ChatServer
 
             _chatServer.ManualFlowControlLimit = Int32.MaxValue;
             _chatServer.Open();
+            OnPropertyChanged(nameof(StartButtonEnabled));
+            OnPropertyChanged(nameof(StopButtonEnabled));
         }
+
 
         private void Stop_Button_Click(object sender, RoutedEventArgs e)
         {
             if(_chatServer != null)
                 _chatServer.Close();
+
+            OnPropertyChanged(nameof(StartButtonEnabled));
+
+            OnPropertyChanged(nameof(StopButtonEnabled));
         }
 
         private void Exit_Button_Click(object sender, RoutedEventArgs e)
@@ -201,17 +205,6 @@ namespace ChatServer
 
                 return collection.ToList();
             }
-            
-      /*    for (int i = 0; i < 100; i++)
-            {
-                result.Add(new User()
-                {
-                    UserName = $"UserName{i.ToString()}",
-                    Password = $"P@ssword{i.ToString()}",
-                    Email = $"user.name.{i.ToString()}@test.com"
-                });
-            }*/
-            //return result;
         }
 
         void UpdateUser()
@@ -221,7 +214,7 @@ namespace ChatServer
 
         void CreateUser()
         {
-            UsersList.Add(new User() { UserName = "NewUser" });
+            UsersList.Add(new User() { UserName = "" });
             OnPropertyChanged(nameof(UsersList));
 
         }
@@ -260,5 +253,28 @@ namespace ChatServer
         {
 
         }
+
+        public void SendMessage(string text, string username)
+        {
+            
+            var newMessage = new Message()
+            {
+                Text = text,
+                Username = username,
+                SentDateTime = DateTime.Now
+            };
+
+            messages.Add(newMessage);
+        }
+
+        public IEnumerable<Message> GetNewMessages(DateTime lastMessageDate)
+        {
+            var newMessages = messages
+                .Where(m => m.SentDateTime > lastMessageDate);
+
+            return newMessages;
+        }
+
+
     }
 }
