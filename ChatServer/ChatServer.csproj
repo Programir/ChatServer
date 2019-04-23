@@ -60,19 +60,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ChangeUserWindow.cs" />
-    <Compile Include="ChangeUserWindow.xaml.cs">
-      <DependentUpon>ChangeUserWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="IChatServer.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="User.cs" />
-    <Page Include="ChangeUserWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

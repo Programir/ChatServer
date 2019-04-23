@@ -12,14 +12,12 @@ using System.Windows.Data;
 
 namespace ChatServer
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window, INotifyPropertyChanged, IChatServer
     {
         private ServiceHost _chatServer;
         
-        private static List<Message> messages = new List<Message>(1000);
+        internal static List<Message> messages = new List<Message>(1000);
 
         public bool StartButtonEnabled
         {
@@ -118,7 +116,6 @@ namespace ChatServer
             }
 
             MessageBox.Show(message, caption, MessageBoxButton.OK, image);
-            //Debug.WriteLine($"{DateTime.Now} | {ex.Message}");
         }
 
         private void ApplyUsers()
@@ -207,11 +204,7 @@ namespace ChatServer
             }
         }
 
-        void UpdateUser()
-        {
-            
-        }
-
+       
         void CreateUser()
         {
             UsersList.Add(new User() { UserName = "" });
@@ -223,19 +216,6 @@ namespace ChatServer
         {
             OnPropertyChanged(nameof(UsersList));
             CollectionViewSource.GetDefaultView(UsersList).Refresh();
-        }
-
-        void DeleteUser()
-        {
-            using (var db = new LiteDatabase(@"data.db"))
-            {
-
-            }
-        }
-
-        private void Input_TextBox_Email(object sender, RoutedEventArgs e)
-        {
-
         }
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -267,10 +247,10 @@ namespace ChatServer
             messages.Add(newMessage);
         }
 
-        public IEnumerable<Message> GetNewMessages(DateTime lastMessageDate)
+        public IEnumerable<Message> GetNewMessages(DateTime newestMessageDate)
         {
             var newMessages = messages
-                .Where(m => m.SentDateTime > lastMessageDate);
+                .Where(m => m.SentDateTime > newestMessageDate);
 
             return newMessages;
         }

@@ -12,5 +12,11 @@ namespace ChatServer
     {
         [OperationContract]
         bool CheckUser(string username, string password);
+
+        [OperationContract]
+        void SendMessage(string text, string username);
+
+        [OperationContract]
+        IEnumerable<Message> GetNewMessages(DateTime lastMessageDate);
     }
 }
